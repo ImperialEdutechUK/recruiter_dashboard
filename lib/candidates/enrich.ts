@@ -1,4 +1,3 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Candidate, Brand } from "@/types/database";
 import type { TableRow } from "@/components/candidate/candidate-table";
 import { roleLabel, subjectLabel, levelLabel, CONTRACT_STATUSES } from "@/lib/constants/roles";
@@ -13,8 +12,9 @@ function substatusFor(c: Candidate, docs?: { total: number; approved: number }):
     case 3: return c.interview_date ? `Interview: ${formatDate(c.interview_date)}` : null;
     case 4: return c.interview_date ? `Interviewed: ${formatDate(c.interview_date)}` : null;
     case 5: return `Pending since ${formatDate(c.updated_at)}`;
-    case 6: return c.decided_at ? `Decision: ${formatDate(c.decided_at)}` : null;
-    case 7: return docs ? `${docs.approved}/${docs.total} approved` : null;
+    case 6: return `Decision made ${formatDate(c.updated_at)}`;
+    case 7: return null;
+    case 8: return `Contract ${contractLabel(c.final_contract_status).toLowerCase()}`;
     case 9: return `Contract ${contractLabel(c.final_contract_status).toLowerCase()}`;
     default: return null;
   }
