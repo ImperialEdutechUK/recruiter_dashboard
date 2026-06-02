@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 213 40% 97%;        /* page: soft blue-grey */
+    --foreground: 222 47% 11%;        /* slate-900 */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --muted: 213 32% 95%;
+    --muted-foreground: 215 16% 47%;  /* slate-500 */
+    --primary: 221 83% 53%;           /* blue-600 #2563EB */
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 214 100% 96%;     /* light blue tint for active nav */
+    --accent: 213 32% 95%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 38%;
+    --success-foreground: 0 0% 100%;
+    --warning: 35 92% 45%;
+    --warning-foreground: 0 0% 100%;
+    --border: 214 32% 91%;            /* slate-200 */
+    --input: 214 32% 91%;
+    --ring: 221 83% 60%;
+    --radius: 0.875rem;
+  }
+}
+
+* { border-color: hsl(var(--border)); }
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: hsl(214 20% 82%); border-radius: 8px; border: 2px solid hsl(var(--background)); }
+::-webkit-scrollbar-thumb:hover { background: hsl(214 18% 72%); }
+
+.card-shadow { box-shadow: 0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06); }
+.card-shadow-lg { box-shadow: 0 4px 6px -1px rgba(16,24,40,.06), 0 10px 24px -4px rgba(16,24,40,.08); }
