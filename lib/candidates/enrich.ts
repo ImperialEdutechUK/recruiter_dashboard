@@ -21,7 +21,7 @@ function substatusFor(c: Candidate, docs?: { total: number; approved: number }):
 }
 
 /** Turn candidate rows into fully-enriched table rows (brands, owner, sub-status). */
-export async function enrichRows(supabase: SupabaseClient, candidates: Candidate[]): Promise<TableRow[]> {
+export async function enrichRows(supabase: any, candidates: Candidate[]): Promise<TableRow[]> {
   if (candidates.length === 0) return [];
   const ids = candidates.map((c) => c.id);
 
