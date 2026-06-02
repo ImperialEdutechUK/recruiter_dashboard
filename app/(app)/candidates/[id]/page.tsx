@@ -77,7 +77,7 @@ export default async function CandidatePage({ params }: { params: { id: string }
           />
         </div>
         <div className="space-y-4">
-          {canManage && brand && <PipelineActions c={c} brand={brand as Brand} />}
+          {canManage && brand && <PipelineActions c={c} brand={brand as unknown as Brand} />}
           {!canManage && canDecide && (
             <div className="space-y-3 rounded-2xl border bg-card p-4">
               <p className="text-sm font-semibold">Submit your decision</p>
