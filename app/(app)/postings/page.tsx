@@ -1,7 +1,7 @@
 import { requireRole } from "@/lib/auth/permissions";
 import { createClient } from "@/lib/supabase/server";
-import { NewAdvertDialog } from "@/components/adverts/new-advert-dialog";
-import { AdvertsTable } from "@/components/adverts/adverts-table";
+import { NewAdvertDialog } from "@/components/postings/new-advert-dialog";
+import { AdvertsTable } from "@/components/postings/adverts-table";
 import type { Advert, Brand } from "@/types/database";
 
 export const dynamic = "force-dynamic";

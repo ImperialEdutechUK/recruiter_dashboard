@@ -162,7 +162,7 @@ export async function createAdvert(formData: FormData) {
     created_by: me,
   });
   if (error) return { error: error.message };
-  revalidatePath("/adverts");
+  revalidatePath("/postings");
   return {};
 }
 
@@ -177,7 +177,7 @@ export async function updateAdvert(id: string, formData: FormData) {
     status: (formData.get("status") as string) || "draft",
   }).eq("id", id);
   if (error) return { error: error.message };
-  revalidatePath("/adverts");
+  revalidatePath("/postings");
   return {};
 }
 
@@ -185,6 +185,6 @@ export async function deleteAdvert(id: string) {
   const supabase = createClient();
   const { error } = await supabase.from("adverts").delete().eq("id", id);
   if (error) return { error: error.message };
-  revalidatePath("/adverts");
+  revalidatePath("/postings");
   return {};
 }

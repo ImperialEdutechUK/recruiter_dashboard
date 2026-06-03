@@ -13,7 +13,7 @@ export const NAV: NavGroup[] = [
   ]},
   { label: "Recruitment", items: [
     { href: "/candidates", label: "Candidates", icon: Users, roles: ["manager"] },
-    { href: "/adverts", label: "Job Adverts", icon: Megaphone, roles: ["manager"] },
+    { href: "/postings", label: "Job Adverts", icon: Megaphone, roles: ["manager"] },
     { href: "/pipeline", label: "Pipeline", icon: KanbanSquare, roles: ["manager"] },
     { href: "/interviews", label: "Interviews", icon: CalendarDays, roles: ["manager"] },
     { href: "/review", label: "Director Reviews", icon: UserCheck, roles: ["manager", "director"] },
