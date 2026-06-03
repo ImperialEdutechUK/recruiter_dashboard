@@ -43,7 +43,6 @@ export default async function CandidatePage({ params }: { params: { id: string }
 
   const canManage = profile.role === "manager";
   const canDecide = (profile.role === "manager" || profile.role === "director") && c.current_stage === 5;
-  const brandObj = (brand ?? null) as Brand | null;
 
   return (
     <div className="space-y-6">
@@ -57,7 +56,7 @@ export default async function CandidatePage({ params }: { params: { id: string }
           <h1 className="text-2xl font-bold tracking-tight">{c.full_name}</h1>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <StageBadge n={c.current_stage} />
-            {brandObj && <BrandPill name={brandObj.name} color={brandObj.color} />}
+            {brand && <BrandPill name={(brand as Brand).name} color={(brand as Brand).color} />}
             {extraBrands.map((b) => <BrandPill key={b.id} name={b.name} color={b.color} />)}
           </div>
         </div>
@@ -78,16 +77,12 @@ export default async function CandidatePage({ params }: { params: { id: string }
           />
         </div>
         <div className="space-y-4">
-          {canManage && brandObj && <PipelineActions c={c} brand={brandObj} />}
-          {!canManage && canDecide && (
+          {canManage && c.current_stage !== 5 && <PipelineActions c={c} brand={brand as Brand} />}
+          {canDecide && (
             <div className="space-y-3 rounded-2xl border bg-card p-4">
-              <p className="text-sm font-semibold">Submit your decision</p>
+              <p className="text-sm font-semibold">Review &amp; decision</p>
+              <p className="text-xs text-muted-foreground">Review the interview, then approve or reject.</p>
               <DecisionForm candidateId={c.id} />
-            </div>
-          )}
-          {profile.role === "academic" && (
-            <div className="rounded-2xl border bg-card p-4 text-sm text-muted-foreground">
-              Manage this candidate&apos;s induction tasks under <Link href="/handover" className="font-medium text-foreground underline">Academic handover</Link>.
             </div>
           )}
         </div>
