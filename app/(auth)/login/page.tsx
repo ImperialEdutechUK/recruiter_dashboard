@@ -43,7 +43,7 @@ export default function LoginPage() {
           </form>
         </div>
         <p className="mt-4 text-center text-xs text-muted-foreground">
-          Accounts are created by the manager in Settings.
+          Contact your administrator for access
         </p>
       </div>
     </main>
