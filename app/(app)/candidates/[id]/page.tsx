@@ -67,7 +67,7 @@ export default async function CandidatePage({ params }: { params: { id: string }
       </div>
 
       <div className="rounded-2xl border bg-card p-5">
-        <StageTracker current={c.current_stage} />
+        <StageTracker current={c.current_stage} candidateId={c.id} editable={canManage} />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
