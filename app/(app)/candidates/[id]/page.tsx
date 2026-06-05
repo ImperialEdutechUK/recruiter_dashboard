@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { StageTracker } from "@/components/candidate/stage-tracker";
 import { CandidateDetail } from "@/components/candidate/candidate-detail";
 import { PipelineActions } from "@/components/candidate/pipeline-actions";
+import { ManagerControls } from "@/components/candidate/manager-controls";
 import { DecisionForm } from "@/components/review/decision-form";
 import { BrandPill } from "@/components/brand/brand-pill";
 import { StageBadge } from "@/components/pipeline/stage-badge";
@@ -21,10 +22,11 @@ export default async function CandidatePage({ params }: { params: { id: string }
   if (!candidate) notFound();
   const c = candidate as Candidate;
 
-  const [{ data: brand }, { data: extra }, { data: documents }, { data: rawNotes }, { data: rawTimeline }] =
+  const [{ data: brand }, { data: extra }, { data: allBrands }, { data: documents }, { data: rawNotes }, { data: rawTimeline }] =
     await Promise.all([
       supabase.from("brands").select("*").eq("id", c.primary_brand_id).single(),
-      supabase.from("candidate_brands").select("brands(*)").eq("candidate_id", c.id),
+      supabase.from("candidate_brands").select("brand_id, brands(*)").eq("candidate_id", c.id),
+      supabase.from("brands").select("*").order("name"),
       supabase.from("candidate_documents").select("*").eq("candidate_id", c.id).order("updated_at"),
       supabase.from("notes").select("id, body, created_at, profiles:author_id(full_name)")
         .eq("candidate_id", c.id).order("created_at", { ascending: false }),
@@ -33,6 +35,8 @@ export default async function CandidatePage({ params }: { params: { id: string }
     ]);
 
   const extraBrands = ((extra ?? []).map((r: any) => r.brands).filter(Boolean)) as Brand[];
+  const extraBrandIds = ((extra ?? []).map((r: any) => r.brand_id).filter(Boolean)) as string[];
+  const brandList = (allBrands ?? []) as Brand[];
   const notes = (rawNotes ?? []).map((n: any) => ({
     id: n.id, body: n.body, created_at: n.created_at, author_name: n.profiles?.full_name ?? "System",
   }));
@@ -84,6 +88,9 @@ export default async function CandidatePage({ params }: { params: { id: string }
               <p className="text-xs text-muted-foreground">Review the interview, then approve or reject.</p>
               <DecisionForm candidateId={c.id} />
             </div>
+          )}
+          {canManage && (
+            <ManagerControls candidate={c} brands={brandList} extraBrandIds={extraBrandIds} />
           )}
         </div>
       </div>

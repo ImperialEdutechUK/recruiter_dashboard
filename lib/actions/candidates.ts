@@ -188,3 +188,31 @@ export async function deleteAdvert(id: string) {
   revalidatePath("/postings");
   return {};
 }
+
+export async function editCandidate(id: string, formData: FormData) {
+  const supabase = createClient();
+  const suitable = formData.getAll("suitable_roles").map(String) as RoleType[];
+  const additional = formData.getAll("additional_brands").map(String);
+
+  const { error } = await supabase.from("candidates").update({
+    full_name: String(formData.get("full_name")),
+    email: String(formData.get("email")),
+    phone: (formData.get("phone") as string) || null,
+    primary_brand_id: String(formData.get("primary_brand_id")),
+    role_type: String(formData.get("role_type")),
+    subject_area: (formData.get("subject_area") as string) || null,
+    level: (formData.get("level") as string) || "na",
+    suitable_roles: suitable,
+  }).eq("id", id);
+  if (error) return { error: error.message };
+
+  await supabase.from("candidate_brands").delete().eq("candidate_id", id);
+  if (additional.length) {
+    await supabase.from("candidate_brands").insert(
+      additional.map((brand_id) => ({ candidate_id: id, brand_id })),
+    );
+  }
+  revalidatePath(`/candidates/${id}`);
+  revalidatePath("/pipeline");
+  return {};
+}
