@@ -13,12 +13,12 @@ import { roleLabel, subjectLabel } from "@/lib/constants/roles";
 import Link from "next/link";
 import type { Candidate, Brand } from "@/types/database";
 
-export function PipelineView({ candidates, brands, canCreate }:
-  { candidates: Candidate[]; brands: Brand[]; canCreate: boolean }) {
+export function PipelineView({ candidates, brands, canCreate, initialStage = "all" }:
+  { candidates: Candidate[]; brands: Brand[]; canCreate: boolean; initialStage?: string }) {
   const brandMap = useMemo(() => Object.fromEntries(brands.map((b) => [b.id, b])), [brands]);
   const [q, setQ] = useState("");
   const [brand, setBrand] = useState("all");
-  const [stageF, setStageF] = useState("all");
+  const [stageF, setStageF] = useState(initialStage);
   const [view, setView] = useState<"list" | "kanban">("list");
 
   const filtered = candidates.filter((c) => {

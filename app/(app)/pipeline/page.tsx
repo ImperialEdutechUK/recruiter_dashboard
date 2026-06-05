@@ -5,8 +5,8 @@ import type { Candidate, Brand } from "@/types/database";
 
 export const dynamic = "force-dynamic";
 
-export default async function PipelinePage() {
-  await requireRole("manager"); // pipeline is the manager workspace
+export default async function PipelinePage({ searchParams }: { searchParams: { stage?: string } }) {
+  await requireRole("manager");
   const supabase = createClient();
 
   const [{ data: candidates }, { data: brands }] = await Promise.all([
@@ -19,6 +19,7 @@ export default async function PipelinePage() {
       candidates={(candidates ?? []) as Candidate[]}
       brands={(brands ?? []) as Brand[]}
       canCreate
+      initialStage={searchParams.stage ?? "all"}
     />
   );
 }
