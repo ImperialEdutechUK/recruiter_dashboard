@@ -22,6 +22,7 @@ export interface Candidate {
   primary_brand_id: string;
   role_type: RoleType;
   subject_area: string | null;
+  subject_other: string | null;
   level: string | null;
   suitable_roles: RoleType[];
   current_stage: number;

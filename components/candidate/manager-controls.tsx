@@ -24,6 +24,7 @@ export function ManagerControls({
   const [err, setErr] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const [target, setTarget] = useState<number>(c.current_stage);
+  const [subject, setSubject] = useState<string>(c.subject_area ?? "");
 
   function onEdit(formData: FormData) {
     setErr(null);
@@ -108,7 +109,7 @@ export function ManagerControls({
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="e_subject_area">Subject area</Label>
-              <Select id="e_subject_area" name="subject_area" defaultValue={c.subject_area ?? ""}>
+              <Select id="e_subject_area" name="subject_area" value={subject} onChange={(e) => setSubject(e.target.value)}>
                 <option value="">—</option>
                 {SUBJECT_AREAS.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
               </Select>
@@ -120,6 +121,13 @@ export function ManagerControls({
               </Select>
             </div>
           </div>
+
+          {subject === "other" && (
+            <div className="space-y-1.5">
+              <Label htmlFor="e_subject_other">Specify subject area *</Label>
+              <Input id="e_subject_other" name="subject_other" required defaultValue={c.subject_other ?? ""} placeholder="e.g. Aviation Management" />
+            </div>
+          )}
 
           <div className="space-y-1.5">
             <Label>Also suitable for</Label>

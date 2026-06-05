@@ -27,6 +27,7 @@ export async function createCandidate(formData: FormData) {
       primary_brand_id: String(formData.get("primary_brand_id")),
       role_type: String(formData.get("role_type")),
       subject_area: (formData.get("subject_area") as string) || null,
+      subject_other: (formData.get("subject_area") === "other" ? (formData.get("subject_other") as string) : null) || null,
       level: (formData.get("level") as string) || "na",
       suitable_roles: suitable,
       created_by: me,
@@ -201,6 +202,7 @@ export async function editCandidate(id: string, formData: FormData) {
     primary_brand_id: String(formData.get("primary_brand_id")),
     role_type: String(formData.get("role_type")),
     subject_area: (formData.get("subject_area") as string) || null,
+    subject_other: (formData.get("subject_area") === "other" ? (formData.get("subject_other") as string) : null) || null,
     level: (formData.get("level") as string) || "na",
     suitable_roles: suitable,
   }).eq("id", id);

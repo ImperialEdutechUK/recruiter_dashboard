@@ -87,7 +87,7 @@ function Overview({ c }: { c: Candidate }) {
           <Field label="Email">{c.email}</Field>
           <Field label="Phone">{c.phone ?? "—"}</Field>
           <Field label="Role type">{roleLabel(c.role_type)}</Field>
-          <Field label="Subject area">{subjectLabel(c.subject_area)}</Field>
+          <Field label="Subject area">{c.subject_area === "other" && c.subject_other ? c.subject_other : subjectLabel(c.subject_area)}</Field>
           <Field label="Level">{levelLabel(c.level)}</Field>
           <Field label="Also suitable for">
             {c.suitable_roles?.length
