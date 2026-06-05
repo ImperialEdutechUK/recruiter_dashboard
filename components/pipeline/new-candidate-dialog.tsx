@@ -13,6 +13,7 @@ import type { Brand } from "@/types/database";
 export function NewCandidateDialog({ brands, label = "New candidate" }: { brands: Brand[]; label?: string }) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [subject, setSubject] = useState("");
   const [pending, start] = useTransition();
 
   function onSubmit(formData: FormData) {
@@ -56,7 +57,7 @@ export function NewCandidateDialog({ brands, label = "New candidate" }: { brands
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="subject_area">Subject area</Label>
-              <Select id="subject_area" name="subject_area" defaultValue="">
+              <Select id="subject_area" name="subject_area" value={subject} onChange={(e) => setSubject(e.target.value)}>
                 <option value="">—</option>
                 {SUBJECT_AREAS.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
               </Select>
@@ -68,6 +69,13 @@ export function NewCandidateDialog({ brands, label = "New candidate" }: { brands
               </Select>
             </div>
           </div>
+
+          {subject === "other" && (
+            <div className="space-y-1.5">
+              <Label htmlFor="subject_other">Specify subject area *</Label>
+              <Input id="subject_other" name="subject_other" required placeholder="e.g. Aviation Management" />
+            </div>
+          )}
 
           <div className="space-y-1.5">
             <Label>Also suitable for</Label>
