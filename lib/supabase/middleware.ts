@@ -25,14 +25,15 @@ export async function updateSession(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
   const path = request.nextUrl.pathname;
-  const isAuthRoute = path.startsWith("/login");
+  const isLoginPage = path.startsWith("/login");
+  const isPublicApi = path.startsWith("/api/heartbeat");
 
-  if (!user && !isAuthRoute) {
+  if (!user && !isLoginPage && !isPublicApi) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
-  if (user && isAuthRoute) {
+  if (user && isLoginPage) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);
