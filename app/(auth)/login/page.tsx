@@ -1,6 +1,7 @@
 "use client";
+import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, ArrowLeft } from "lucide-react";
 import { signIn } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +46,11 @@ export default function LoginPage() {
         <p className="mt-4 text-center text-xs text-muted-foreground">
           Contact your administrator for access
         </p>
+        <div className="mt-5 text-center">
+          <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground">
+            <ArrowLeft className="h-4 w-4" /> Back to home
+          </Link>
+        </div>
       </div>
     </main>
   );
